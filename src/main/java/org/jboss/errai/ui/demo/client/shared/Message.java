@@ -8,15 +8,15 @@ import org.jboss.errai.common.client.api.annotations.Portable;
  * @author Jonathan Fuerth <jfuerth@gmail.com>
  */
 @Portable
-public class HelloMessage
+public class Message
 {
    private int id;
    private String message;
 
-   public HelloMessage()
+   public Message()
    {}
 
-   public HelloMessage(String message)
+   public Message(String message)
    {
       this.message = message;
    }

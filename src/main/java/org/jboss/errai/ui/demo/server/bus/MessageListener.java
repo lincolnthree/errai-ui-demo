@@ -20,7 +20,7 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.jboss.errai.ui.demo.client.shared.HelloMessage;
+import org.jboss.errai.ui.demo.client.shared.Message;
 import org.jboss.errai.ui.demo.client.shared.Response;
 
 
@@ -33,7 +33,7 @@ public class MessageListener
    @Inject
    private Event<Response> responseEvent;
 
-   public void handleMessage(@Observes HelloMessage event)
+   public void handleMessage(@Observes Message event)
    {
       System.out.println("Received HelloMessage from Client: " + event.getMessage());
       responseEvent.fire(new Response(event.getMessage() + " @ timemillis: " + System.currentTimeMillis()));
