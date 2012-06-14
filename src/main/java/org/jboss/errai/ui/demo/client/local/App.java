@@ -16,12 +16,23 @@
 package org.jboss.errai.ui.demo.client.local;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
 import org.jboss.errai.ioc.client.api.EntryPoint;
+import org.jboss.errai.ui.demo.client.shared.Message;
+import org.jboss.errai.ui.demo.client.shared.Response;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * Main application entry point.
@@ -33,9 +44,45 @@ import com.google.gwt.user.client.ui.RootPanel;
 @EntryPoint
 public class App extends Composite
 {
+   /*
+    * Inject any Widget with a default constructor, bind to data-field "sendMessage".
+    */
+   @Inject
+   @DataField
+   private Button sendMessage;
+
+   /*
+    * Or create it yourself, and bind to data-field "messageText".
+    */
+   @DataField
+   private TextBox messageText = new TextBox();
+
+   /*
+    * We can also override the name of the data-field "messageResponse".
+    */
+   @DataField("messageResponse")
+   private Label responseLabel = new Label();
+
+   @Inject
+   private Event<Message> message;
+
    @PostConstruct
    public void setup()
    {
+      sendMessage.addClickHandler(new ClickHandler() {
+         @Override
+         public void onClick(ClickEvent event)
+         {
+            message.fire(new Message(messageText.getText()));
+         }
+      });
+
       RootPanel.get().add(this);
    }
+
+   public void handle(@Observes Response response)
+   {
+      responseLabel.setText(response.getMessage());
+   }
+
 }
