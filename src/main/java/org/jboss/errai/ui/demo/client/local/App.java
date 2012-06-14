@@ -18,18 +18,24 @@ package org.jboss.errai.ui.demo.client.local;
 import javax.annotation.PostConstruct;
 
 import org.jboss.errai.ioc.client.api.EntryPoint;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Main application entry point.
  */
+/*
+ * The '#template' value tells Errai UI to use the specified Element from the HTML markup file (with data-field="template") as the root of this Composite component.
+ */
+@Templated("#template")
 @EntryPoint
-public class App
+public class App extends Composite
 {
    @PostConstruct
    public void setup()
    {
-      Window.alert("Errai is Running");
+      RootPanel.get().add(this);
    }
 }
