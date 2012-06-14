@@ -1,0 +1,7 @@
+.classpath
+.errai
+.project
+.settings/
+target/
+src/main/webapp/app/
+src/main/gwt-unitCache/
