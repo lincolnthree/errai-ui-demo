@@ -18,6 +18,7 @@ package org.jboss.errai.ui.demo.client.local;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.jboss.errai.ioc.client.api.EntryPoint;
@@ -30,7 +31,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -57,11 +58,11 @@ public class App extends Composite
    @DataField
    private TextBox messageText = new TextBox();
 
-   /*
-    * We can also override the name of the data-field "messageResponse".
-    */
-   @DataField("messageResponse")
-   private Label responseLabel = new Label();
+   @DataField
+   private HTMLPanel spotlights = new HTMLPanel("");
+   
+   @Inject
+   Instance<Spotlight> spotlightInstance;
 
    @Inject
    private Event<Message> message;
@@ -80,9 +81,14 @@ public class App extends Composite
       RootPanel.get().add(this);
    }
 
+   private int messageCount = 0;
+   
    public void handle(@Observes Response response)
    {
-      responseLabel.setText(response.getMessage());
+      Spotlight spotlight = spotlightInstance.get();
+      spotlight.setTitle("Message " + messageCount ++);
+      spotlight.setContent(response.getMessage());
+      spotlights.add(spotlight);
    }
 
 }
