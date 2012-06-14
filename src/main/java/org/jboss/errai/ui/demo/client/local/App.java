@@ -21,8 +21,10 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
+import org.jboss.errai.databinding.client.api.DataBinder;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ui.demo.client.shared.Message;
+import org.jboss.errai.ui.demo.client.shared.Profile;
 import org.jboss.errai.ui.demo.client.shared.Response;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
@@ -60,7 +62,26 @@ public class App extends Composite
 
    @DataField
    private HTMLPanel spotlights = new HTMLPanel("");
-   
+
+   /*
+    * Injecting a DataBinder will bind matching the corresponding data-field Widget names, to the corresponding model fields.
+    */
+   @Inject
+   DataBinder<Profile> profileBinder;
+
+   @Inject
+   @DataField
+   @SuppressWarnings("unused")
+   private TextBox username;
+
+   @Inject
+   @DataField
+   @SuppressWarnings("unused")
+   private TextBox email;
+
+   /*
+    * Allows us to instantiate new Spotlight instances.
+    */
    @Inject
    Instance<Spotlight> spotlightInstance;
 
@@ -81,13 +102,13 @@ public class App extends Composite
       RootPanel.get().add(this);
    }
 
-   private int messageCount = 0;
-   
    public void handle(@Observes Response response)
    {
       Spotlight spotlight = spotlightInstance.get();
-      spotlight.setTitle("Message " + messageCount ++);
-      spotlight.setContent(response.getMessage());
+      String name = profileBinder.getModel().getUsername();
+      String eml = profileBinder.getModel().getEmail();
+      spotlight.setTitle((name == null ? "Anonymous" : name));
+      spotlight.setContent((eml == null ? "" : "[ " + eml + " ]") + " " + response.getMessage());
       spotlights.add(spotlight);
    }
 
