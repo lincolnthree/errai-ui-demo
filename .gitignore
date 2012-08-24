@@ -6,3 +6,5 @@
 target/
 src/main/webapp/app/
 src/main/gwt-unitCache/
+rebel.xml
+.forge_settings
