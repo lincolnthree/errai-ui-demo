@@ -26,6 +26,8 @@ import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ui.demo.client.shared.Message;
 import org.jboss.errai.ui.demo.client.shared.Profile;
 import org.jboss.errai.ui.demo.client.shared.Response;
+import org.jboss.errai.ui.shared.api.annotations.AutoBound;
+import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 
@@ -67,14 +69,17 @@ public class App extends Composite
     * Injecting a DataBinder will bind matching the corresponding data-field Widget names, to the corresponding model fields.
     */
    @Inject
+   @AutoBound
    DataBinder<Profile> profileBinder;
 
    @Inject
+   @Bound
    @DataField
    @SuppressWarnings("unused")
    private TextBox username;
 
    @Inject
+   @Bound
    @DataField
    @SuppressWarnings("unused")
    private TextBox email;
