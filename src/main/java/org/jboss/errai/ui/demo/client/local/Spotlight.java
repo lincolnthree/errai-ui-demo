@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.Composite;
 public class Spotlight extends Composite
 {
    @DataField
-   private HeadingElement title = DOM.createElement("h1").cast();
+   private HeadingElement title = DOM.createElement("h2").cast();
 
    @DataField
    private ParagraphElement content = DOM.createElement("p").cast();
