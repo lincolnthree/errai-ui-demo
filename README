@@ -1,0 +1,21 @@
+REQUIREMENTS
+------------
+- positive outlook on life
+- maven, git, and a web browser
+- JBoss AS 7.1.1
+
+INITIAL SETUP
+-------------
+1. clone this project
+
+!WARNING: if you have imported the project into eclipse, the editor tends to create a bogus faces-config.xml file that causes JBoss AS 7.1.1 to fail to deploy the project
+2. please verify that ./src/main/webapp/WEB-INF/ does not contain faces-config.xml, and remove it if necessary
+
+3. issue a mvn clean install
+
+
+HOW TO DEPLOY AND RUN
+---------------------
+1. issue a mvn gwt:run
+2. deploy the errai-ui-demo-1.0.0-SNAPSHOT.war file into JBoss AS 7.1.1
+3. in your web browser, navigate to http://localhost:8080/errai-ui-demo/?gwt.codesvr=127.0.0.1:9997
