@@ -16,18 +16,60 @@
 package org.jboss.errai.ui.demo.client.local;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
 import org.jboss.errai.ioc.client.api.EntryPoint;
+import org.jboss.errai.ui.demo.client.shared.Message;
+import org.jboss.errai.ui.demo.client.shared.Response;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.EventHandler;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 
-import com.google.gwt.user.client.Window;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * Main application entry point.
  */
+@Templated("Mockup.html#template")
 @EntryPoint
-public class App {
+public class App extends Composite {
+
+	@Inject
+	@DataField
+	private Button send;
+
+	@Inject
+	@DataField
+	private TextBox message;
+
+	@Inject
+	@DataField
+	private Label response;
+
+	@Inject
+	private Event<Message> toServer;
+
 	@PostConstruct
 	public void setup() {
-		Window.alert("Errai GWT App is Running");
+		RootPanel.get("rootPanel").add(this);
 	}
+
+	@EventHandler("send")
+	public void handleSendMessage(ClickEvent event) {
+		send.setEnabled(false);
+		toServer.fire(new Message(message.getText()));
+	}
+
+	public void handleResponse(@Observes Response msg) {
+		response.setText(msg.getText());
+		send.setEnabled(true);
+	}
+
 }

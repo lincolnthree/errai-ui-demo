@@ -41,7 +41,7 @@ body {
 
 <body>
 
-	<div>
+	<div data-field="template">
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
@@ -72,10 +72,15 @@ body {
 								example as a starting point to build something more unique.</span>
 						</p>
 						<p>
-							<input type="text" placeholder="Type your message...">
+							<input data-field="message" type="text"
+								placeholder="Type your message...">
 						</p>
 						<p>
-							<a class="btn btn-primary btn-large">Send Message &raquo;</a>
+							<a data-field="send" class="btn btn-primary btn-large">Send
+								Message &raquo;</a>
+						</p>
+						<p>
+							<span data-field="response"></span>
 						</p>
 					</div>
 					<div class="span3 cols well">
