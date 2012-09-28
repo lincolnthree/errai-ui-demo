@@ -18,73 +18,78 @@ package org.jboss.errai.ui.demo.client.local;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.jboss.errai.databinding.client.api.DataBinder;
+import org.jboss.errai.databinding.client.api.InitialState;
 import org.jboss.errai.ioc.client.api.EntryPoint;
-import org.jboss.errai.ui.demo.client.shared.Message;
-import org.jboss.errai.ui.demo.client.shared.Profile;
-import org.jboss.errai.ui.demo.client.shared.Response2;
+import org.jboss.errai.ui.demo.client.shared.AddFragment;
+import org.jboss.errai.ui.demo.client.shared.Fragment;
 import org.jboss.errai.ui.shared.api.annotations.AutoBound;
+import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.EventHandler;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * Main application entry point.
  */
-@Templated("Mockup.html#template")
 @EntryPoint
+@Templated("Mockup.html#template")
 public class App extends Composite {
 
 	@Inject
-	@DataField
-	private Button send;
-
-	@Inject
-	@DataField
-	private TextBox message;
-
-	@Inject
-	@DataField
-	private Label response;
-
-	@Inject
-	private Event<Message> toServer;
-
-	@Inject
-	@DataField
-	private TextBox name;
-
-	@Inject
-	@DataField
-	private TextBox email;
-
-	@Inject
-	@AutoBound
-	private DataBinder<Profile> profile;
+	private Event<Fragment> toServer;
 
 	@PostConstruct
 	public void setup() {
 		RootPanel.get("rootPanel").add(this);
 	}
 
-	@EventHandler("send")
-	public void handleSendMessage(ClickEvent event) {
-		send.setEnabled(false);
-		toServer.fire(new Message(message.getText()));
+	@Inject
+	@Bound
+	@DataField
+	private TextBox name;
+
+	@Inject
+	@Bound
+	@DataField
+	private TextArea text;
+
+	@Inject
+	@DataField
+	private Button submit;
+
+	@DataField("fragments")
+	private HTMLPanel fragments = new HTMLPanel("p", "");
+
+	@Inject
+	private Instance<FragmentSpan> fragmentSpans;
+
+	@Inject
+	@AutoBound
+	private DataBinder<Fragment> msg;
+
+	@EventHandler("submit")
+	@SuppressWarnings("unused")
+	private void handleSend(ClickEvent event) {
+		toServer.fire(new Fragment(msg.getModel().getName(), msg.getModel()
+				.getText()));
+		msg.setModel(new Fragment(), InitialState.FROM_MODEL);
 	}
 
-	public void handleResponse(@Observes Response2 msg) {
-		response.setText(msg.getName());
-		send.setEnabled(true);
+	public void handleResponse(@Observes AddFragment response) {
+		fragments.add(fragmentSpans.get().setFragment(
+				new Fragment(response.getName(), response.getText())));
 	}
-
 }

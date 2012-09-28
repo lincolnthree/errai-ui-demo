@@ -4,17 +4,16 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.jboss.errai.ui.demo.client.shared.Message;
-import org.jboss.errai.ui.demo.client.shared.Response2;
+import org.jboss.errai.ui.demo.client.shared.AddFragment;
+import org.jboss.errai.ui.demo.client.shared.Fragment;
 
 public class MessageListener {
 
 	@Inject
-	private Event<Response2> toClient;
+	private Event<AddFragment> toClient;
 
-	public void handleMessage(@Observes Message message) {
-		toClient.fire(new Response2("The server got your message, ["
-				+ message.getText() + "] at [" + System.currentTimeMillis()
-				+ "]"));
+	public void handleMessage(@Observes Fragment message) {
+		System.out.println("Got message: " + message);
+		toClient.fire(new AddFragment(message.getName(), message.getText()));
 	}
 }

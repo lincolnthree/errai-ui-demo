@@ -42,65 +42,61 @@ body {
 <body>
 
 	<div data-field="template">
-		<div class="navbar navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse"
-						data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span>
-					</a> <a class="brand" href="#">Errai UI Demo</a>
-					<div class="nav-collapse">
-						<ul class="nav">
-							<li class="active"><a href="#">Home</a></li>
-							<li><a href="#about">About</a></li>
-							<li><a href="#contact">Contact</a></li>
-						</ul>
-					</div>
-					<!--/.nav-collapse -->
-				</div>
-			</div>
-		</div>
 
 		<div class="container">
-			<div class="hero-unit">
-				<h1>Hello, from Errai UI!</h1>
-				<div class="row">
-					<div class="span6 cols">
-						<p>
-							<span>This is a template used by Errai UI. It utilizes
-								pure HTML files to bind markup to GWT Widgets. Please use this
-								example as a starting point to build something more unique.</span>
-						</p>
-						<p>
-							<input data-field="message" type="text"
-								placeholder="Type your message...">
-						</p>
-						<p>
-							<a data-field="send" class="btn btn-primary btn-large">Send
-								Message &raquo;</a>
-						</p>
-						<p>
-							<span data-field="response"></span>
-						</p>
-					</div>
-					<div class="span3 cols well">
-						<h3>About you:</h3>
-						<input data-field="name" type="text" placeholder="name">
-						<input data-field="email" type="email" placeholder="email">
-					</div>
+			<h1 style="margin-top: 50px;">It all started when...</h1>
+			<hr />
+			<div class="row">
+				<div class="span9 cols">
+					<p data-field="fragments">
+						<span data-field="fragment" class="fragment">little jenny
+							went to the general store to buy some candy.<a
+							data-field="delete" class="fragment-delete">x</a>
+						</span>
+					</p>
+					<p data-field="reply">...</p>
+				</div>
+				<div class="span3 cols">
+					<legend>What happens next?</legend>
+					<input data-field="name" type="text" name="name"
+						placeholder="Your name" tabindex="1" autofocus="autofocus"
+						style="width: 100%">
+					<textarea data-field="text" rows="3" tabindex="2"
+						style="width: 100%" placeholder="Your plot"></textarea>
+					<label class="checkbox"> <input type="checkbox"
+						tabindex="3"> New paragraph
+					</label>
+					<hr />
+					<button data-field="submit" type="submit" tabindex="4"
+						class="btn btn-primary btn-large">Submit</button>
 				</div>
 			</div>
 
+			<hr />
 			<!-- Example row of columns -->
 			<div class="row">
-				<div class="span4 well">
-					<h2>Spotlight</h2>
-					<p>This is default text that will be rendered in the Widget
-						unless otherwise specified at runtime. All inner HTML is preserved
-						if the Widget being composited into the template implements
-						HasText or HasHTML.</p>
+				<div class="span6">
+					<img alt="Errai Logo" src="images/errai.png" class="pull-right"
+						style="width: 140px; margin-right: 15px;">
+					<h2>Learn more about Errai</h2>
+					<p>Because you deserve better than plain JavaScript, Errai
+						leverages the Java language combined with the CDI programming
+						model to give you rich web applications in minutes.</p>
 					<p>
-						<a class="btn" href="#">Remove &raquo;</a>
+						<a class="btn" href="http://jboss.org/errai">Learn more
+							&raquo;</a>
+					</p>
+				</div>
+				<div class="span6">
+					<img alt="Forge Logo" src="images/forge.png" class="pull-right"
+						style="width: 140px; margin-right: 15px;">
+					<h2>Learn more about Forge</h2>
+					<p>We all want to do more with less. JBoss Forge provides that
+						by handling the mundane tasks of everyday development, delivered
+						straight to your finger-tips as a powerful command-line tool.</p>
+					<p>
+						<a class="btn" href="http://jboss.org/forge">Learn more
+							&raquo;</a>
 					</p>
 				</div>
 			</div>
@@ -108,7 +104,7 @@ body {
 			<hr>
 
 			<footer>
-				<p>&copy; Company 2012</p>
+				<p>&copy; Red Hat, 2012</p>
 			</footer>
 
 		</div>
