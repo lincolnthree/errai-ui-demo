@@ -20,9 +20,12 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import org.jboss.errai.databinding.client.api.DataBinder;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ui.demo.client.shared.Message;
-import org.jboss.errai.ui.demo.client.shared.Response;
+import org.jboss.errai.ui.demo.client.shared.Profile;
+import org.jboss.errai.ui.demo.client.shared.Response2;
+import org.jboss.errai.ui.shared.api.annotations.AutoBound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.EventHandler;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
@@ -56,6 +59,18 @@ public class App extends Composite {
 	@Inject
 	private Event<Message> toServer;
 
+	@Inject
+	@DataField
+	private TextBox name;
+
+	@Inject
+	@DataField
+	private TextBox email;
+
+	@Inject
+	@AutoBound
+	private DataBinder<Profile> profile;
+
 	@PostConstruct
 	public void setup() {
 		RootPanel.get("rootPanel").add(this);
@@ -67,8 +82,8 @@ public class App extends Composite {
 		toServer.fire(new Message(message.getText()));
 	}
 
-	public void handleResponse(@Observes Response msg) {
-		response.setText(msg.getText());
+	public void handleResponse(@Observes Response2 msg) {
+		response.setText(msg.getName());
 		send.setEnabled(true);
 	}
 

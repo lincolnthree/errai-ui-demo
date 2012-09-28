@@ -4,15 +4,15 @@ import org.jboss.errai.common.client.api.annotations.Portable;
 import org.jboss.errai.marshalling.client.api.annotations.MapsTo;
 
 @Portable
-public class Response {
+public class Response2 {
 
-	private String text;
+	private String name;
 
-	public Response(@MapsTo("text") String text) {
-		this.text = text;
+	public Response2(@MapsTo("name") String text) {
+		this.name = text;
 	}
 
-	public String getText() {
-		return text;
+	public String getName() {
+		return name;
 	}
 }
